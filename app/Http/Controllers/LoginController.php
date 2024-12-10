@@ -40,7 +40,8 @@ class LoginController extends Controller
         }
 
         return view('dashboard', ['user' => session('user')]);
-    }public function logout()
+    }
+    public function logout()
     {
         session()->forget('user');
         return redirect()->route('login');
