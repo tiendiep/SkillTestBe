@@ -19,4 +19,4 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// sua login
+// sua loginadd
