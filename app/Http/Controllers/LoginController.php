@@ -26,7 +26,7 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             session(['user' => $user]);
-            return redirect()->route('dashboard');
+            return redirect()->route('products.index');
         }
        
 

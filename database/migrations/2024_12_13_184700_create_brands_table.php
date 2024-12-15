@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateAddresses extends Migration
+class CreateBrandsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class UpdateAddresses extends Migration
      */
     public function up()
     {
-        Schema::table('addresses', function (Blueprint $table) {
-        $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-    });
+        Schema::create('brands', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('country');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -25,6 +28,6 @@ class UpdateAddresses extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('brands');
     }
 }

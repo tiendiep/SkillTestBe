@@ -22,7 +22,9 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'role',  // Thêm trường 'role' vào mảng $fillable
+        'role',
+        'number',
+        'addresses',// Thêm trường 'role' vào mảng $fillable
     ];
 
     /**
