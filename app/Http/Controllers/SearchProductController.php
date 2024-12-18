@@ -15,22 +15,18 @@ class SearchProductController extends Controller
 
         
         $products = Product::join('brands', 'products.brand_id', '=', 'brands.id')
-            ->join('product_variants', 'product_variants.product_id', '=', 'products.id')
-            ->join('product_images', function ($join) {
-                $join->on('product_images.product_id', '=', 'products.id')
-                    ->on('product_images.product_variant_id', '=', 'product_variants.id');
-            })
+            ->join('product_variant_images', 'product_variant_images.product_id', '=', 'products.id')
             ->where('brands.name', 'like', '%' . $brandName . '%') 
             ->select(
                 'products.name',
                 'products.description',
                 'brands.name as brand_name',
                 'brands.country as brand_country',
-                'product_variants.color',
-                'product_variants.size',
-                'product_variants.stock',
-                'product_variants.price',
-                'product_images.image_url'
+                'product_variant_images.color',
+                'product_variant_images.size',
+                'product_variant_images.stock',
+                'product_variant_images.price',
+                'product_variant_images.image_url'
             )
             ->get();
            
@@ -57,22 +53,19 @@ class SearchProductController extends Controller
   
     $products = Product::
         join('brands', 'products.brand_id', '=', 'brands.id')
-        ->join('product_variants', 'product_variants.product_id', '=', 'products.id')
-        ->join('product_images', function ($join) {
-            $join->on('product_images.product_id', '=', 'products.id')
-                 ->on('product_images.product_variant_id', '=', 'product_variants.id');
-        })
-        ->whereBetween('product_variants.price', [$minPrice, $maxPrice]) // Lọc theo giá tiền
+        ->join('product_variant_images', 'product_variant_images.product_id', '=', 'products.id')
+       
+        ->whereBetween('product_variant_images.price', [$minPrice, $maxPrice]) // Lọc theo giá tiền
         ->select(
             'products.name',
             'products.description',
             'brands.name as brand_name',
             'brands.country as brand_country',
-            'product_variants.color',
-            'product_variants.size',
-            'product_variants.stock',
-            'product_variants.price',
-            'product_images.image_url'
+            'product_variant_images.color',
+            'product_variant_images.size',
+            'product_variant_images.stock',
+            'product_variant_images.price',
+            'product_variant_images.image_url'
         )
         ->get();
 

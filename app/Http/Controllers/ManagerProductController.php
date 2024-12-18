@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Brand;
-use App\Models\ProductVariant;
+use App\Models\ProductVariantImage;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 
@@ -12,7 +12,7 @@ class ManagerProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with(['brand', 'variants', 'images'])->get();
+        $products = Product::with(['brand', 'images'])->get();
         return view('products.index', compact('products'));
     }
 
@@ -25,9 +25,11 @@ class ManagerProductController extends Controller
 
 
     public function edit($id)
-    {
-        $product = Product::with(['brand', 'variants', 'images'])->findOrFail($id);
+    { 
+        
+        $product = Product::with(['brand', 'images'])->find($id);
         $brands = Brand::all();
+       
         return view('products.edit', compact('product', 'brands'));
     }
 
@@ -36,12 +38,7 @@ class ManagerProductController extends Controller
     {
         $product = Product::findOrFail($id);
     
-       
-        $product->cartItems()->delete();
-   
         $product->images()->delete();
-    
-        $product->variants()->delete();
     
         $product->delete();
     
@@ -73,21 +70,16 @@ class ManagerProductController extends Controller
             'brand_id' => $validatedData['brand_id'],
         ]);
     
-        $variant = ProductVariant::create([
+        $variant = ProductVariantImage::create([
             'product_id' => $product->id,
             'color' => $validatedData['color'],
             'size' => $validatedData['size'],
             'stock' => $validatedData['stock'],
             'price' => $validatedData['price'],
+            'image_url' => $validatedData['image_url'],
         ]);
     
-        if ($request->has('image_url')) {
-            ProductImage::create([
-                'product_id' => $product->id,
-                'product_variant_id' => $variant->id,
-                'image_url' => $validatedData['image_url'],
-            ]);
-        }
+       
     
         return redirect()->route('products.index')->with('success', 'Sản phẩm đã được tạo thành công!');
     }
@@ -114,28 +106,17 @@ class ManagerProductController extends Controller
             'brand_id' => $validatedData['brand_id'],
         ]);
     
-        $variant = $product->variants()->updateOrCreate(
+        $variant = $product->images()->updateOrCreate(
             ['color' => $validatedData['color']],
             [
                 'size' => $validatedData['size'],
                 'stock' => $validatedData['stock'],
                 'price' => $validatedData['price'],
+                'image_url' => $validatedData['image_url'],
             ]
         );
     
-        if ($variant && $variant->id) {
-            if ($request->has('image_url')) {
-                ProductImage::updateOrCreate(
-                    [
-                        'product_variant_id' => $variant->id,
-                        'product_id' => $product->id,
-                    ],
-                    ['image_url' => $validatedData['image_url']]
-                );
-            }
-        } else {
-            return redirect()->route('products.index')->with('error', 'Failed to create or update the product variant.');
-        }
+       
     
         return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }

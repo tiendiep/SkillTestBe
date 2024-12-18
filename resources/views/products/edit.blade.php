@@ -35,17 +35,17 @@
 
         <div class="form-group">
             <label for="color">Color</label>
-            <input type="text" class="form-control" name="color" id="color" value="{{ $product->variants->first()->color }}" required>
+            <input type="text" class="form-control" name="color" id="color" value="{{ $product->images->first()->color }}" required>
         </div>
 
         <div class="form-group">
             <label for="size">Size</label>
-            <input type="text" class="form-control" name="size" id="size" value="{{ $product->variants->first()->size }}">
+            <input type="text" class="form-control" name="size" id="size" value="{{ $product->images->first()->size }}">
         </div>
 
         <div class="form-group">
             <label for="stock">Stock</label>
-            <input type="number" class="form-control" name="stock" id="stock" value="{{ $product->variants->first()->stock }}" required>
+            <input type="number" class="form-control" name="stock" id="stock" value="{{ $product->images->first()->stock }}" required>
         </div>
 
         <div class="form-group">

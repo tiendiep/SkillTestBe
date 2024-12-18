@@ -16,16 +16,15 @@ class CartController extends Controller
 
     $cartItems = CartItem::join('users', 'cart_items.user_id', '=', 'users.id')
     ->join('products', 'cart_items.product_id', '=', 'products.id')
-    ->join('product_variants', 'cart_items.product_variants_id', '=', 'product_variants.id')
-    ->join('product_images', 'product_images.product_variant_id', '=', 'product_variants.id')
+    ->join('product_variant_images', 'cart_items.product_variant_images_id', '=', 'product_variant_images.id')
     ->select(
         'cart_items.id',
         'users.name AS user_name',
         'products.name AS product_name',
-        'product_variants.price',
-        'product_variants.color',
-        'product_variants.size',
-        'product_images.image_url',
+        'product_variant_images.price',
+        'product_variant_images.color',
+        'product_variant_images.size',
+        'product_variant_images.image_url',
         'cart_items.quantity'
     )
     ->where('users.id', $user->id) 
@@ -43,7 +42,7 @@ public function addToCart(Request $request)
     
     $cartItem = CartItem::where('user_id', $user->id)
                         ->where('product_id', $request->product_id)
-                        ->where('product_variants_id', $request->product_variants_id)
+                        ->where('product_variant_images_id', $request->product_variant_images_id)
                         ->first();
     
     if ($cartItem) {
@@ -55,7 +54,7 @@ public function addToCart(Request $request)
         CartItem::create([
             'user_id' => $user->id,
             'product_id' => $request->product_id,
-            'product_variants_id' => $request->product_variants_id,
+            'product_variant_images_id' => $request->product_variant_images_id,
             'quantity' => $request->quantity,
         ]);
     }
