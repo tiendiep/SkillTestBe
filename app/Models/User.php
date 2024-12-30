@@ -67,4 +67,5 @@ class User extends Authenticatable implements JWTSubject
             'role' => $this->role,  // Thêm thông tin 'role' vào trong token (tuỳ chọn)
         ];
     }
+  
 }

@@ -18,21 +18,11 @@ class ProductController extends Controller
 }
 public function show($id)
 {
-    $product =Product::join('brands', 'products.brand_id', '=', 'brands.id')
-    ->join('product_variant_images', 'product_variant_images.product_id', '=', 'products.id')
-    ->where('products.id', $id)
-    ->select(
-            'products.name', 
-            'products.description', 
-            'brands.name as brand_name', 
-            'brands.country as brand_country', 
-            'product_variant_images.color', 
-            'product_variant_images.size', 
-            'product_variant_images.stock', 
-            'product_variant_images.price', 
-            'product_variant_images.image_url'
-    )
+    $product =Product::join('brands', 'brands.id', '=', 'products.brand_id')
+    ->join('images', 'images.product_id', '=', 'products.id')
+    ->select('products.name', 'products.description', 'brands.name as brand_name', 'brands.country', 'images.url', 'products.prices')
     ->get();
+
   
 if ($product->isNotEmpty()) {
     

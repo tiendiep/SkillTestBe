@@ -17,9 +17,10 @@
         </div>
 
         <div class="form-group">
-            <label for="price">Price</label>
-            <input type="number" class="form-control" name="price" id="price" step="0.01" required>
-        </div>
+    <label for="price">Price</label>
+    <input type="number" class="form-control" name="price" id="price" step="0.01" required>
+</div>
+
 
         <div class="form-group">
             <label for="brand_id">Brand</label>
@@ -28,21 +29,6 @@
                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                 @endforeach
             </select>
-        </div>
-
-        <div class="form-group">
-            <label for="color">Color</label>
-            <input type="text" class="form-control" name="color" id="color" required>
-        </div>
-
-        <div class="form-group">
-            <label for="size">Size</label>
-            <input type="text" class="form-control" name="size" id="size">
-        </div>
-
-        <div class="form-group">
-            <label for="stock">Stock</label>
-            <input type="number" class="form-control" name="stock" id="stock" required>
         </div>
 
         <div class="form-group">

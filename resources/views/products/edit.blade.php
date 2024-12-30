@@ -9,17 +9,17 @@
 
         <div class="form-group">
             <label for="name">Product Name</label>
-            <input type="text" class="form-control" name="name" id="name" value="{{ $product->name }}" required>
+            <input type="text" class="form-control" name="name" id="name" value="{{ old('name', $product->name) }}" required>
         </div>
 
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea class="form-control" name="description" id="description" required>{{ $product->description }}</textarea>
+            <textarea class="form-control" name="description" id="description" required>{{ old('description', $product->description) }}</textarea>
         </div>
 
         <div class="form-group">
             <label for="price">Price</label>
-            <input type="number" class="form-control" name="price" id="price" step="0.01" value="{{ $product->price }}" required>
+            <input type="number" class="form-control" name="price" id="price" step="0.01" value="{{ old('price', $product->prices) }}" required>
         </div>
 
         <div class="form-group">
@@ -34,23 +34,8 @@
         </div>
 
         <div class="form-group">
-            <label for="color">Color</label>
-            <input type="text" class="form-control" name="color" id="color" value="{{ $product->images->first()->color }}" required>
-        </div>
-
-        <div class="form-group">
-            <label for="size">Size</label>
-            <input type="text" class="form-control" name="size" id="size" value="{{ $product->images->first()->size }}">
-        </div>
-
-        <div class="form-group">
-            <label for="stock">Stock</label>
-            <input type="number" class="form-control" name="stock" id="stock" value="{{ $product->images->first()->stock }}" required>
-        </div>
-
-        <div class="form-group">
             <label for="image_url">Image URL</label>
-            <input type="url" class="form-control" name="image_url" id="image_url" value="{{ optional($product->images->first())->image_url }}">
+            <input type="url" class="form-control" name="image_url" id="image_url" value="{{ old('image_url', optional($product->images->first())->url) }}">
         </div>
 
         <button type="submit" class="btn btn-primary">Update Product</button>

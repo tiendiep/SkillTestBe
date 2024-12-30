@@ -13,20 +13,11 @@ class SearchProductController extends Controller
     
         $brandName = $request->input('brand_name'); 
 
-        
         $products = Product::join('brands', 'products.brand_id', '=', 'brands.id')
-            ->join('product_variant_images', 'product_variant_images.product_id', '=', 'products.id')
+        ->join('images', 'images.product_id', '=', 'products.id')
             ->where('brands.name', 'like', '%' . $brandName . '%') 
             ->select(
-                'products.name',
-                'products.description',
-                'brands.name as brand_name',
-                'brands.country as brand_country',
-                'product_variant_images.color',
-                'product_variant_images.size',
-                'product_variant_images.stock',
-                'product_variant_images.price',
-                'product_variant_images.image_url'
+                'products.name', 'products.description', 'brands.name as brand_name', 'brands.country', 'images.url', 'products.prices'
             )
             ->get();
            
@@ -51,21 +42,12 @@ class SearchProductController extends Controller
     }
 
   
-    $products = Product::
-        join('brands', 'products.brand_id', '=', 'brands.id')
-        ->join('product_variant_images', 'product_variant_images.product_id', '=', 'products.id')
-       
-        ->whereBetween('product_variant_images.price', [$minPrice, $maxPrice]) // Lọc theo giá tiền
+    $products = Product::join('brands', 'products.brand_id', '=', 'brands.id')
+    ->join('images', 'images.product_id', '=', 'products.id')
+        ->whereBetween('products.prices', [$minPrice, $maxPrice]) 
         ->select(
-            'products.name',
-            'products.description',
-            'brands.name as brand_name',
-            'brands.country as brand_country',
-            'product_variant_images.color',
-            'product_variant_images.size',
-            'product_variant_images.stock',
-            'product_variant_images.price',
-            'product_variant_images.image_url'
+            'products.name', 'products.description', 'brands.name as brand_name', 'brands.country', 'images.url', 'products.prices'
+            
         )
         ->get();
 

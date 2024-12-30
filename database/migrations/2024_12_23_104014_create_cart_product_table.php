@@ -3,20 +3,22 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-class CreateOrdersTable extends Migration
+
+class CreateCartProductTable extends Migration
 {
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('cart_product', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('total_price', 10, 2);
-            $table->timestamps(); // Tạo cả 'created_at' và 'updated_at'
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->integer('quantity');
+            $table->timestamps();
         });
     }
+
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('cart_product');
     }
 }
-

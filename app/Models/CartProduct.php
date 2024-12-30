@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductVariant extends Model
+class CartProduct extends Model
 {
     use HasFactory;
+    protected $table = 'cart_product';
+    protected $fillable = ['user_id', 'product_id', 'quantity'];
 
-    protected $fillable = ['product_id', 'color', 'size', 'stock', 'price'];
-
+   
 
     public function product()
     {
