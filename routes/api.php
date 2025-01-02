@@ -43,22 +43,6 @@ Route::post('me', [AuthController::class, 'me']);
 
 
 
-// Route::middleware(['auth:api'])->group(function () {
-//     // Route cho admin
-//     Route::middleware('role:admin')->group(function () {
-//         Route::get('users', [MemberController::class, 'index'])->name('users.index');
-//         Route::get('users/create', [CreateController::class, 'create'])->name('users.create');
-//         Route::post('users', [CreateController::class, 'store'])->name('users.store');
-//         Route::delete('users/{id}', [DeleteController::class, 'destroy'])->name('users.destroy');
-//     });
-//     Route::middleware('role:admin,manager')->group(function () {
-//         Route::get('users/{id}/edit', [EditController::class, 'edit'])->name('users.edit');
-//         Route::put('users/{id}', [EditController::class, 'update'])->name('users.update');
-//     });
-
-//     // Route cho user, admin, manager
-//     Route::middleware('role:user,admin,manager')->get('users/search', [SearchController::class, 'search'])->name('users.search');
-// });
 
 
 
@@ -67,8 +51,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('products/{id}', [ProductController::class, 'show']); 
     
    
-    Route::post('products/search', [SearchProductController::class, 'searchByBrand']); 
-    Route::post('products/search/price', [SearchProductController::class, 'searchByPrice']); 
+    Route::post('products/search', [ProductController::class, 'search']); 
+    
 
   
     Route::get('cart', [CartController::class, 'getCartItemsForUser']); 
