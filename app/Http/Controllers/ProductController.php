@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use App\Models\Product;
 
 class ProductController extends Controller
 {

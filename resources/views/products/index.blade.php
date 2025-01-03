@@ -19,12 +19,26 @@
                 </select>
             </div>
 
+<<<<<<< HEAD
+=======
+            <!-- Lọc theo stock -->
+            <div class="col-md-3">
+                <label for="stock">Stock</label>
+                <input type="number" name="stock" id="stock" class="form-control" value="{{ request('stock') }}" min="0">
+            </div>
+
+            <!-- Lọc theo giá -->
+>>>>>>> 72509b2c56c500f3e665bc5ac9d82e75f20b4819
             <div class="col-md-3">
                 <label for="price">Price</label>
                 <input type="number" name="price" id="price" class="form-control" value="{{ request('price') }}" min="0">
             </div>
 
+<<<<<<< HEAD
           
+=======
+            <!-- Nút lọc -->
+>>>>>>> 72509b2c56c500f3e665bc5ac9d82e75f20b4819
             <div class="col-md-3">
                 <button type="submit" class="btn btn-primary mt-4">Filter</button>
             </div>
@@ -71,7 +85,11 @@
 
     <!-- Phân trang -->
     <div class="d-flex justify-content-center mt-4">
+<<<<<<< HEAD
     {{ $products->appends(request()->query())->links() }}
 
+=======
+        {{ $products->appends(request()->query())->links() }}
+>>>>>>> 72509b2c56c500f3e665bc5ac9d82e75f20b4819
     </div>
 @endsection
