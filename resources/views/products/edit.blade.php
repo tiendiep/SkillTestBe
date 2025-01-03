@@ -10,16 +10,33 @@
         <div class="form-group">
             <label for="name">Product Name</label>
             <input type="text" class="form-control" name="name" id="name" value="{{ old('name', $product->name) }}" required>
+            @error('name')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="description">Description</label>
             <textarea class="form-control" name="description" id="description" required>{{ old('description', $product->description) }}</textarea>
+            @error('description')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="price">Price</label>
             <input type="number" class="form-control" name="price" id="price" step="0.01" value="{{ old('price', $product->prices) }}" required>
+            @error('price')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Stock</label>
+            <input type="number" class="form-control" name="stock" id="stock" min="0" value="{{ old('stock', $product->stock) }}" required>
+            @error('stock')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
@@ -31,11 +48,17 @@
                     </option>
                 @endforeach
             </select>
+            @error('brand_id')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="image_url">Image URL</label>
             <input type="url" class="form-control" name="image_url" id="image_url" value="{{ old('image_url', optional($product->images->first())->url) }}">
+            @error('image_url')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <button type="submit" class="btn btn-primary">Update Product</button>
