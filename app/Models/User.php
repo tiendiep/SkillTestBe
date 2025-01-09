@@ -22,7 +22,9 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'role',  // Thêm trường 'role' vào mảng $fillable
+        'role',
+        'number',
+        'addresses',// Thêm trường 'role' vào mảng $fillable
     ];
 
     /**
@@ -65,4 +67,5 @@ class User extends Authenticatable implements JWTSubject
             'role' => $this->role,  // Thêm thông tin 'role' vào trong token (tuỳ chọn)
         ];
     }
+  
 }
