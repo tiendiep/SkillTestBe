@@ -40,27 +40,14 @@ Route::post('me', [AuthController::class, 'me']);
 });
 
 
-
-<<<<<<< HEAD
-=======
-
-
-
-
-
->>>>>>> 72509b2c56c500f3e665bc5ac9d82e75f20b4819
 Route::middleware(['auth:api'])->group(function () {
     Route::get('products', [ProductController::class, 'index']);
     Route::get('products/{id}', [ProductController::class, 'show']); 
    
     Route::post('products/search', [ProductController::class, 'search']); 
     
-<<<<<<< HEAD
-=======
 
-  
->>>>>>> 72509b2c56c500f3e665bc5ac9d82e75f20b4819
-    Route::get('cart', [CartController::class, 'getCartItemsForUser']); 
+    Route::get('cart', [CartController::class, 'getCart']); 
     Route::post('cart', [CartController::class, 'addToCart']);
     Route::put('cart/{id}', [CartController::class, 'updateCartQuantity']); 
     Route::delete('cart/{id}', [CartController::class, 'removeFromCart']);
