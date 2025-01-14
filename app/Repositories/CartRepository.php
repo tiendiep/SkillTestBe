@@ -1,30 +1,32 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Cart;
 use App\Models\CartProduct;
 use App\Models\Product;
-use App\Repositories\CartRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class CartRepository implements CartRepositoryInterface
 {
     public function getCartItemsForUser($userId)
     {
-        return Cart::leftjoin('users', 'cart.user_id', '=', 'users.id')
-            ->leftjoin('cart_product', 'cart_product.cart_id', '=', 'cart.id')
-            ->leftjoin('products', 'cart_product.product_id', '=', 'products.id')
+        return Cart::leftJoin('users', 'cart.user_id', '=', 'users.id')
+            ->leftJoin('cart_product', 'cart_product.cart_id', '=', 'cart.id')
+            ->leftJoin('products', 'cart_product.product_id', '=', 'products.id')
             ->leftJoin('images', function($join) {
                 $join->on('images.product_id', '=', 'products.id')
-                     ->where('images.id', '=', DB::raw("(SELECT MIN(id) FROM images WHERE product_id = products.id)"));
+                    ->where('images.id', '=', DB::raw("(SELECT MIN(id) FROM images WHERE product_id = products.id)"));
             })
             ->select(
-                'cart_product.id',
+                'cart.id AS cart_id',
                 'users.name AS user_name',
                 'products.name AS product_name',
                 'products.prices',
                 'images.url',
-                'cart_product.quantity'
+                'cart_product.quantity',
+                DB::raw('products.prices * cart_product.quantity AS total_price'),
+                'cart.created_at'
             )
             ->where('users.id', $userId)
             ->get();
@@ -34,7 +36,6 @@ class CartRepository implements CartRepositoryInterface
     {
         $product = Product::findOrFail($productId);
 
-       
         if ($product->stock < $quantity) {
             throw new \Exception('Not enough stock available');
         }
@@ -66,7 +67,6 @@ class CartRepository implements CartRepositoryInterface
         $cartItem = CartProduct::findOrFail($cartItemId);
         $product = $cartItem->product;
 
-   
         if ($quantity > $product->stock) {
             throw new \Exception('Not enough stock available');
         }

@@ -4,60 +4,31 @@ namespace App\Repositories;
 
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Product;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class OrderRepository implements OrderRepositoryInterface
 {
-    public function createOrder(array $items)
+    public function createOrder(array $orderData)
     {
-        DB::beginTransaction();
+        return Order::create($orderData);
+    }
 
-        try {
-            $totalAmount = 0;
-            $products = [];
+    public function createOrderItem(array $itemData)
+    {
+        return OrderItem::create($itemData);
+    }
 
-           
-            foreach ($items as $item) {
-                $product = Product::lockForUpdate()->findOrFail($item['product_id']);
+    public function updateTotalPrice(int $orderId, float $totalPrice)
+    {
+        return Order::where('id', $orderId)->update(['total_price' => $totalPrice]);
+    }
 
-                if ($product->stock < $item['quantity']) {
-                    throw new \Exception("Not enough stock for product: {$product->name}");
-                }
-
-                $totalAmount += $product->prices * $item['quantity'];
-
-                $products[] = [
-                    'product' => $product,
-                    'quantity' => $item['quantity'],
-                ];
-            }
-
-    
-            $order = Order::create([
-                'user_id' => Auth::id(),
-                'total_price' => $totalAmount,
-            ]);
-
-            foreach ($products as $item) {
-                OrderItem::create([
-                    'orders_id' => $order->id,
-                    'product_id' => $item['product']->id,
-                    'quantity' => $item['quantity'],
-                    'price' => $item['product']->prices,
-                ]);
-
-           
-                $item['product']->decrement('stock', $item['quantity']);
-            }
-
-            DB::commit();
-
-            return $order;
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
+    public function decrementStock(int $productId, int $quantity)
+    {
+       
+        return DB::table('products')
+            ->where('id', $productId)
+            ->where('stock', '>=', $quantity)
+            ->decrement('stock', $quantity);
     }
 }
